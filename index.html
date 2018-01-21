@@ -1,0 +1,54 @@
+<html>
+<head>
+	<title>Birthday on Mars</title>
+</head>
+<body>
+	<div>
+		<form class="marsdate">
+			<div>
+				<input type="date" class="birthdate" />
+				<input type="button" value="calculate" onclick="calculate()" />
+			</div>
+			<br>
+			<div>
+				<div>
+					<span>You are</span>
+					<input type="text" class="marsyears" /> 
+					<span>Martian years old.</span>
+				</div>
+				<div>
+					<span>And you have spend</span>
+					<input type="text" class="marsdays" />
+					<span>sols(Martian days) on Mars.</span>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div>NOTE: The calculations are based on exact numbers from <a href="https://en.wikipedia.org/wiki/Timekeeping_on_Mars">wikipedia article</a>.</div>
+
+	<div>
+		Share on Facebook <a href="https://www.facebook.com/sharer/sharer.php?u=http://mybirthdayonmars.com/" class="fb-share" target="_blank">Share</a>
+	</div>
+
+<script type="text/javascript">
+	var dateinput = document.querySelector('.birthdate');
+	var marsdaysinput = document.querySelector('.marsdays');
+	var marsyearsinput = document.querySelector('.marsyears');
+	
+	var fbShare = document.querySelector('.fb-share');
+
+	function calculate(){
+		var birthdayMilliseconds = new Date(dateinput.value).getTime();
+		var nowMilliseconds = Date.now();
+
+		var marsdays = ((nowMilliseconds - birthdayMilliseconds)/88775244.147);
+		var marsyears = marsdays/668.5991;
+
+		// marsdaysinput.value = Math.round(marsdays, 2) ;
+		marsdaysinput.value = Math.round(marsdays*100)/100;
+		marsyearsinput.value = Math.round(marsyears*100)/100;
+
+	}
+</script>
+</body>
+</html>
