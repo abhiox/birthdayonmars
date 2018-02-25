@@ -1,0 +1,159 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>My birthday on Mars</title>
+    <meta name="Description" content="Checkout your next birthday, your age in years and days on Mars. ">
+    <meta name="Keywords" content="My birthday on mars, mybirthdayonmars, age on mars, age in years on mars">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap-material-datetimepicker.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="mars-div">
+        <div class="back">
+            <div class="left"></div>
+            <div class="right">
+                <div class="mars-right"></div>
+                <div class="mars-right"></div>
+                <div class="mars-right"></div>
+            </div>
+        </div>
+        <div class="mars-inner">
+            <div class="front-face">
+                <div class="heading">
+                    <span class="sub-text">My birthday on</span>
+                    <span class="text">MARS</span>
+                </div>
+                <div class="text-field">
+                    <input type="text" id="date" placeholder="Click here to enter your birthday on Earth">
+                </div>
+            </div>
+            <div class="back-face">
+                <div class="back-face-inner">
+                    <div class="heading">
+                        <div class="sub-text">Your next birthday on Mars is on:</div>
+                        <div class="next-bday">28 Jun 2020</div>
+                    </div>
+                    <div class="other-info">
+                        <div class="info">You are <span class="age">12</span> years old on Mars</div>
+                        <div class="info">You have spent <span class="days">8000</span> sols(Martian days) till now</div>
+                    </div>
+                    <div class="share-div">
+                        <!-- <div class="header">Share:</div> -->
+                        <div class="share-icons">
+                            <a href="" id="fb-link">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="" id="twitter-link">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="" id="linkedin-link">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="or-text">OR</div>
+                    <div class="button another-btn">
+                        <span class="button__mask"></span>
+                        <span class="button__text">Calculate another birthday</span>
+                        <span class="button__text button__text--bis">Calculate another birthday</span>
+                    </div>
+                    <div class="made-by">
+                        Made with science by <a href="https://abhiox.github.io" target="_blank">Abhishek Singh</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/moment.js"></script>
+<script src="js/bootstrap-material-datetimepicker.js"></script>
+<script>
+    var dateinput = $('#date')[0];
+	var marsdaysinput = $('.days')[0];
+	var marsyearsinput = $('.age')[0];
+	// var nextbirthdayinput = $('.nextbirthday');
+	var nextbirthdayfromearthinput = $('.next-bday')[0];
+	
+	var fbShare = $('#fb-link')[0];
+	var tShare = $('#twitter-link')[0];
+	var lShare = $('#linkedin-link')[0];
+
+	var monthNames = new Array(13);
+	monthNames[0]  = "Jan";
+	monthNames[1]  = "Feb";
+	monthNames[2]  = "Mar";
+	monthNames[3]  = "Apr";
+	monthNames[4]  = "May";
+	monthNames[5]  = "Jun";
+	monthNames[6]  = "Jul";
+	monthNames[7]  = "Aug";
+	monthNames[8]  = "Sep";
+	monthNames[9] = "Oct";
+	monthNames[10] = "Nov";
+	monthNames[11] = "Dec";
+
+    $(document).ready(function(){
+        $('#date').bootstrapMaterialDatePicker({
+            format: 'D MMM YYYY',
+            year: true,
+            date: true,
+            time: false,
+            clearButton: true,
+            maxDate: moment()._d,
+            change: function(event, date){
+                console.log(event);
+                console.log(date);
+            }
+        });
+    });
+
+    $('.another-btn').click(function(){
+        $('input#date').val('');
+        $('.mars-inner').toggleClass('rotate');
+    });
+
+    $('#date').change(function(event, date){
+        if(dateinput.value === ''){
+            return;
+        }
+
+        var birthday = new Date(dateinput.value);
+		var birthdayMilliseconds = birthday.getTime();
+		var nowMilliseconds = Date.now();
+
+		var oneDayOnMarsMilliseconds = 88775244.147;
+		var daysOnMarsInAnYear = 668.5991;
+		var marsdays = ((nowMilliseconds - birthdayMilliseconds)/oneDayOnMarsMilliseconds);
+		var marsyears = marsdays/daysOnMarsInAnYear;
+
+		// marsdaysinput.value = Math.round(marsdays, 2) ;
+		marsdaysinput.innerText = Math.round(marsdays*100)/100;
+		marsyearsinput.innerText = Math.round(marsyears*100)/100;
+
+		var oneYearOnMarsMilliseconds = oneDayOnMarsMilliseconds * daysOnMarsInAnYear;
+		var currentYear = new Date(nowMilliseconds);
+		currentYear = currentYear.getFullYear();
+		var nowYearBirthday = new Date(currentYear, birthday.getMonth(), birthday.getDate());
+		var nextBirthdayFromEarth = nowYearBirthday.getTime() + oneYearOnMarsMilliseconds;
+		console.log(nextBirthdayFromEarth);
+		nextBirthdayFromEarth = new Date(nextBirthdayFromEarth);
+		nextbirthdayfromearthinput.innerText = nextBirthdayFromEarth.getDate() + ' ' + monthNames[nextBirthdayFromEarth.getMonth()] + ' ' + nextBirthdayFromEarth.getFullYear();
+
+        var uriText = 'My next birthday on Mars is on '+nextbirthdayfromearthinput.innerText+'. Checkout yours.'
+        uriText = encodeURI(uriText);
+
+        var link = 'http://www.mybirthdayonmars.com';
+
+        fbShare.href = 'https://www.facebook.com/sharer/sharer.php?u='+ link +'&text=' + uriText;
+        tShare.href = 'https://twitter.com/intent/tweet?url='+ link +'&text=' + uriText;
+        lShare.href = 'http://www.linkedin.com/shareArticle?mini=true&url='+ link +'&title=' + uriText;
+
+        setTimeout(function(){
+            $('.mars-inner').toggleClass('rotate');
+        },500);
+    });
+</script>
+</body>
+</html>
