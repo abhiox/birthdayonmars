@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <meta name="Description" content="Checkout your next birthday, your age in years and days on Mars. ">
+    <meta name="Description" content="Checkout your next birthday, age in years and days on Mars.">
     <meta name="Keywords" content="My birthday on mars, mybirthdayonmars, age on mars, age in years on mars">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/bootstrap-material-datetimepicker.css">
@@ -39,18 +39,18 @@
                     </div>
                     <div class="other-info">
                         <div class="info">You are <span class="age">12</span> years old on Mars</div>
-                        <div class="info">You have spent <span class="days">8000</span> sols(Martian days) till now</div>
+                        <div class="info">You have spent <span class="days">8000</span> sols (Martian days) till now</div>
                     </div>
                     <div class="share-div">
                         <!-- <div class="header">Share:</div> -->
                         <div class="share-icons">
-                            <a href="" id="fb-link">
+                            <a href="" id="fb-link" title="Share on Facebook">
                                 <i class="fa fa-facebook"></i>
                             </a>
-                            <a href="" id="twitter-link">
+                            <a href="" id="twitter-link" title="Share on Twitter">
                                 <i class="fa fa-twitter"></i>
                             </a>
-                            <a href="" id="linkedin-link">
+                            <a href="" id="linkedin-link" title="Share on LinkedIn">
                                 <i class="fa fa-linkedin"></i>
                             </a>
                         </div>
@@ -115,6 +115,8 @@
     $('.another-btn').click(function(){
         $('input#date').val('');
         $('.mars-inner').toggleClass('rotate');
+
+        $('.back-face-inner').removeClass('do-animate');
     });
 
     $('#date').change(function(event, date){
@@ -147,7 +149,7 @@
         var uriText = 'My next birthday on Mars is on '+nextbirthdayfromearthinput.innerText+'. Checkout yours.'
         uriText = encodeURI(uriText);
 
-        var link = 'http://www.mybirthdayonmars.com';
+        var link = 'https://www.mybirthdayonmars.com';
 
         fbShare.href = 'https://www.facebook.com/sharer/sharer.php?u='+ link +'&text=' + uriText;
         tShare.href = 'https://twitter.com/intent/tweet?url='+ link +'&text=' + uriText;
@@ -155,6 +157,8 @@
 
         setTimeout(function(){
             $('.mars-inner').toggleClass('rotate');
+
+            $('.back-face-inner').addClass('do-animate');
         },500);
     });
 </script>
